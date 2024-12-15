@@ -1,0 +1,4 @@
+--template=./template.rb
+--database=postgresql
+--skip-test
+--skip-javascript

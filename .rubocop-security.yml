@@ -1,0 +1,41 @@
+require:
+  - rubocop-gitlab-security
+
+Bundler/InsecureProtocolSource:
+  Enabled: true
+
+GitlabSecurity/DeepMunge:
+  Enabled: true
+
+GitlabSecurity/JsonSerialization:
+  Enabled: true
+
+GitlabSecurity/PublicSend:
+  Enabled: true
+
+GitlabSecurity/RedirectToParamsUpdate:
+  Enabled: true
+
+GitlabSecurity/SendFileParams:
+  Enabled: true
+
+GitlabSecurity/SqlInjection:
+  Enabled: true
+
+GitlabSecurity/SystemCommandInjection:
+  Enabled: true
+
+Security/Eval:
+  Enabled: true
+
+Security/JSONLoad:
+  Enabled: true
+
+Security/MarshalLoad:
+  Enabled: true
+
+Security/Open:
+  Enabled: true
+
+Security/YAMLLoad:
+  Enabled: true

@@ -1,0 +1,102 @@
+inherit_from: .rubocop-security.yml
+
+require:
+  - rubocop-rails
+  - rubocop-performance
+  - rubocop-rspec
+  - rubocop-rspec_rails
+
+AllCops:
+  Exclude:
+    - '**/assets/**/*'
+    - '**/javascript/**/*'
+    - '**/views/**/*'
+    - '**/bin/**/*'
+    - '**/coverage/**/*'
+    - '**/db/migrate/*'
+    - '**/db/**/schema.rb'
+    - '**/log/**/*'
+    - '**/public/**/*'
+    - '**/storage/**/*'
+    - '**/script/**/*'
+    - '**/vendor/**/*'
+    - '**/tmp/**/*'
+    - '**/node_modules/**/*'
+  ExtraDetails: true
+  TargetRubyVersion: 2.7
+  SuggestExtensions: false
+
+# Style
+Bundler/OrderedGems:
+  TreatCommentsAsGroupSeparators: false
+
+Layout/HashAlignment:
+  Exclude:
+    - lib/tasks/auto_annotate_models.rake
+
+Layout/LineLength:
+  Max: 100
+  AllowedPatterns: ['\A#']
+  Exclude:
+    - config/initializers/*.rb
+
+Lint/MissingSuper:
+  Exclude:
+    - app/services/**/*
+    - app/components/**/*
+
+Metrics/BlockLength:
+  Exclude:
+    - config/routes.rb
+    - config/environments/*.rb
+    - lib/tasks/**/*.rake
+    - spec/**/*_spec.rb
+
+Metrics/ClassLength:
+  Max: 200
+
+Metrics/MethodLength:
+  CountAsOne:
+    - array
+    - hash
+    - heredoc
+    - method_call
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+  EnforcedStyle: always_true
+
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes
+  Include:
+    - app/**/*
+    - config/**/*
+    - lib/**/*
+    - spec/**/*
+    - Gemfile
+
+Style/ReturnNil:
+  Description: Use return instead of return nil.
+  Enabled: true
+
+# Rspec
+RSpec/EmptyExampleGroup:
+  Exclude:
+    - spec/swagger/**/*_spec.rb
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Max: 10
+
+RSpec/VariableName:
+  Exclude:
+    - spec/swagger/**/*_spec.rb

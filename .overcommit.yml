@@ -1,0 +1,153 @@
+# Use this file to configure the Overcommit hooks you wish to use. This will
+# extend the default configuration defined in:
+# https://github.com/sds/overcommit/blob/master/config/default.yml
+#
+# At the topmost level of this YAML file is a key representing type of hook
+# being run (e.g. pre-commit, commit-msg, etc.). Within each type you can
+# customize each hook, such as whether to only run it on certain files (via
+# `include`), whether to only display output if it fails (via `quiet`), etc.
+#
+# For a complete list of hooks, see:
+# https://github.com/sds/overcommit/tree/master/lib/overcommit/hook
+#
+# For a complete list of options that you can use to customize hooks, see:
+# https://github.com/sds/overcommit#configuration
+#
+
+CommitMsg:
+  ALL:
+    requires_files: false # apply checkers checking to all the files in the repository
+    quiet: false
+
+  HardTabs:
+    enabled: true
+    description: 'Check for hard tabs'
+
+  # # This rule requires "hunspell" lib installed
+  # SpellCheck:
+  #   enabled: true
+  #   description: 'Check for misspelled words'
+  #   required_executable: 'hunspell'
+  #   flags: ['-a']
+
+  # TextWidth:
+  #   enabled: true
+  #   description: 'Check text width'
+  #   max_subject_width: 60
+  #   min_subject_width: 0
+
+PreCommit:
+  ALL:
+    problem_on_unmodified_line: report
+    requires_files: true
+    required: false # these checkers can be skipped using the "SKIP" var
+    quiet: false
+
+  BundleAudit:
+    enabled: true
+    flags: ['--update']
+
+  BundleCheck:
+    enabled: true
+
+  DatabaseConsistency:
+    enabled: true
+    command: ['bundle', 'exec', 'database_consistency']
+
+  EmptyMessage:
+    enabled: true
+    description: 'Check for empty commit message'
+    quiet: true
+
+  Eslint:
+    enabled: true
+    description: 'Analyze with Eslint'
+    problem_on_unmodified_line: ignore
+    command: ['yarn', 'run', 'lint:check']
+
+  # https://github.com/JuanitoFatas/fast-ruby
+  Fasterer:
+    enabled: true
+    on_warn: fail
+    description: Fasterer will suggest some speed improvements
+
+  FixMe:
+    quiet: true
+    enabled: true
+    keywords: ['FIXME']
+    exclude:
+      - .overcommit.yml
+
+  ForbiddenBranches:
+    enabled: true
+    branch_patterns: ['master', 'main', 'develop', 'dev', 'development']
+    description: 'Check commit creation attempts to restricted branches'
+
+  LocalPathsInGemfile:
+    quiet: true
+    description: Checks for local path set in the gemfile (usally done for debigging)
+    enabled: true
+
+  MergeConflicts:
+    enabled: true
+    description: 'Check for merge conflicts'
+    quiet: true
+    required_executable: 'grep'
+    flags: ['-IHn', "^<<<<<<<[ \t]"]
+
+  Prettier:
+    enabled: true
+    description: 'Analyze with Prettier'
+    problem_on_unmodified_line: ignore
+    command: ['yarn', 'run', 'format:check']
+
+  # https://rails-bestpractices.com/
+  RailsBestPractices:
+    enabled: true
+    on_warn: fail
+    command: ['rails_best_practices', '--config', 'rails_best_practices.yml']
+
+  RailsSchemaUpToDate:
+    enabled: true
+    description: 'Check if database schema is up to date'
+    include:
+      - 'db/migrate/*.rb'
+      - 'db/schema.rb'
+
+  # https://github.com/troessner/reek/blob/master/docs/Code-Smells.md
+  Reek:
+    enabled: true
+    on_warn: fail
+    command: ['bundle', 'exec', 'reek', '--no-documentation']
+
+  RuboCop:
+    enabled: true
+    required_executable: bundle
+    problem_on_unmodified_line: ignore
+    command: ['bundle', 'exec', 'rubocop']
+    on_warn: fail # Treat all warnings as failures
+
+  TrailingWhitespace:
+    enabled: true
+    exclude:
+      - '**/db/structure.sql' # Ignore trailing whitespace in generated files
+
+PrePush:
+  Brakeman:
+    enabled: true
+    on_warn: fail
+
+PostCheckout:
+  ALL:
+    quiet: true
+
+  BundleInstall:
+    enabled: true
+
+PostMerge:
+  BundleInstall:
+    enabled: true
+
+PostRewrite:
+  BundleInstall:
+    enabled: true

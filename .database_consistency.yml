@@ -1,0 +1,22 @@
+DatabaseConsistencySettings:
+  color: true
+  log_level: DEBUG
+
+# Everything is enabled by default.
+DatabaseConsistencyCheckers:
+  All:
+    enabled: true # You can disable everything until you explicitly enable it with any option below.
+  MissingIndexChecker:
+    enabled: true # Enables/disables the checker entirely/globally. If disabled here, nothing can enable it back.
+  MissingUniqueIndexChecker:
+    enabled: true
+  ColumnPresenceChecker:
+    enabled: true
+  NullConstraintChecker:
+    enabled: true
+
+# Example
+# AdminUser:
+#   password:
+#     ColumnPresenceChecker:
+#       enabled: false # The devise add a password field behind the gem so we need to disable.
