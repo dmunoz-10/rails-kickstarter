@@ -253,6 +253,12 @@ def setup_gitignore
   append_to_file '.gitignore', "\n#{config}"
 end
 
+def add_remote_debug_config
+  insert_into_file 'config/application.rb',
+                   "require 'debug/open_nonstop' if defined?(Rails::Server) && Rails.env.development?\n",
+                   before: '# Require the gems listed in Gemfile, including any gems'
+end
+
 def copy_needed_files
   # Copy files that should always be in project
   copy_file '.database_consistency.yml', '.database_consistency.yml'
@@ -271,6 +277,7 @@ def setup
   copy_needed_files
 
   setup_gitignore
+  add_remote_debug_config
   add_annotate
   add_bundler_audit
   add_letter_opener_web
