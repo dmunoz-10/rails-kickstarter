@@ -265,8 +265,8 @@ def copy_needed_files
   copy_file '.fasterer.yml', '.fasterer.yml'
   copy_file '.overcommit.yml', '.overcommit.yml'
   copy_file '.reek.yml', '.reek.yml'
-  rubocop_lints = File.read('.rubocop.yml', &:gets)
-  append_into_file '.rubocop.yml', "\n#{rubocop_lints}\n"
+  rubocop_lints = File.read('../.rubocop.yml', &:gets)
+  append_to_file '.rubocop.yml', "\n#{rubocop_lints}\n"
   copy_file '.rubocop-security.yml', '.rubocop-security.yml'
   copy_file '.rubycritic.yml', '.rubycritic.yml'
   copy_file 'rails_best_practices.yml', 'rails_best_practices.yml'
@@ -302,28 +302,28 @@ after_bundle do
   setup
 
   # Commit everything to git
-  # unless ENV['SKIP_GIT']
-  #   git :init
-  #   git add: '.'
-  #   # git commit will fail if user.email is not configured
-  #   begin
-  #     git commit: %(-m "Initial commit")
-  #     add_overcommit
-  #   rescue StandardError => e
-  #     puts e.message
-  #   end
-  # end
+  unless ENV['SKIP_GIT']
+    git :init
+    git add: '.'
+    # git commit will fail if user.email is not configured
+    begin
+      git commit: %(-m "Initial commit")
+      add_overcommit
+    rescue StandardError => e
+      puts e.message
+    end
+  end
 
   say
-  say "#{app_name} app successfully created!", :blue
+  say "#{app_name} app successfully created!", :blue, :bold
   say
-  say "To get started with your new app:", :green
+  say "To get started with your new app:", :green, :bold
   say
-  say "  cd #{app_name}"
+  say "  cd #{app_name}", :yellow, :on_black
   say
   say "  # Update config/database.yml with your database credentials"
   say
-  say "  rails db:create && rails db:migrate"
-  say "  gem install foreman"
-  say "  foreman start # Run Rails, sidekiq, and vite"
+  say "  rails db:create && rails db:migrate", :yellow, :on_black
+  say "  gem install foreman", :yellow, :on_black
+  say "  foreman start # Run Rails, sidekiq, and vite", :yellow, :on_black
 end
